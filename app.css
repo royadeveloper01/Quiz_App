@@ -12,12 +12,11 @@
 }
 
 @keyframes slidein {
-    from {
-        transform: translateX(0%);
-    }
-    to {
-        transform: translateX(100%);
-    }
+    0% {color: lime; left: 0px; top: 0px;}
+    25% {color: limegreen; left: 200px; top: 0px;}
+    50% {color: rgb(12, 170, 12); left: 200px; top: 200px;}
+    75% {color: rgb(3, 58, 3); left: 0px; top: 200px;}
+    100% {color: rgb(26, 43, 26); left: 0px; top: 0px;}
 }
 h1,
 h2,
@@ -30,7 +29,8 @@ h1 {
     font-size: 5.4rem;
     color: #56a5eb;
     margin-bottom: 5rem;
-    animation: slidein 5s infinite;
+    animation: slidein 3s reverse;
+    position: relative;
 }
 
 h1 > span {
