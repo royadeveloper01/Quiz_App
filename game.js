@@ -1,5 +1,7 @@
 const question = document.getElementById('question');
 const choices = Array.from(document.getElementsByClassName('choice-text'));
+const questionCounterText = document.getElementById('questionCounter');
+const scoreText = document.getElementById('score');
 
 let currentQuestion = [];
 let acceptingAnswers = false;
@@ -9,7 +11,7 @@ let availableQuestions = [];
 
 let questions = [
     {
-        question: "Inside which HTML element do we put the JavaScript??",
+        question: "Inside which HTML element do we put the JavaScript?",
         choice1: "<script>",
         choice2: "<javascript>",
         choice3: "<js>",
@@ -42,7 +44,6 @@ startGame = () => {
     questionCounter = 0;
     score = 0;
     availableQuestions = [...questions];
-    console.log(availableQuestions);
     getNewQuestion();
 }
 
@@ -52,6 +53,7 @@ getNewQuestion = () => {
         return window.location.assign("/end.html");
     } 
     questionCounter++;
+    questionCounterText.innerText = `${questionCounter}/${MAX_QUESTIONS}`
     const questionIndex = Math.floor(Math.random() * availableQuestions.length);
     currentQuestion = availableQuestions[questionIndex];
     question.innerText = currentQuestion.question;
@@ -62,7 +64,6 @@ getNewQuestion = () => {
     });
 
     availableQuestions.splice(questionIndex, 1);
-    console.log(availableQuestions);
     acceptingAnswers = true;
 };
 
@@ -73,9 +74,20 @@ choices.forEach(choice => {
         acceptingAnswers = false;
         const selectedChoice = e.target;
         const selectedAnswer = selectedChoice.dataset['number'];
-        console.log(selectedAnswer);
-        getNewQuestion();
+        
+
+        const classToApply =
+            selectedAnswer == currentQuestion.answer ? "correct" : "incorrect";
+        
+
+        selectedChoice.parentElement.classList.add(classToApply);
+
+        setTimeout(() => {
+            selectedChoice.parentElement.classList.remove(classToApply);
+            getNewQuestion();
+        }, 1000);
+        
     });
-})
+});
 
 startGame();
